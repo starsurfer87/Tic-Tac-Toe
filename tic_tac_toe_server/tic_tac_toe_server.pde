@@ -88,6 +88,9 @@ void mouseReleased() {
   }
 }
 
-void serverEvent() {
-  println("New Client");
+/*
+void serverEvent(Server server, Client client) {
+  println("Sending turn to client. Turn is" + turn);
+  myServer.write(turn);
 }
+*/
