@@ -40,7 +40,7 @@ void drawXO(int row, int col) {
     ellipse(50, 50, 90, 90);
   } else if (grid[row][col] == 2) {
     line(10, 10, 90, 90);
-    line(90, 10, 90, 10);
+    line(90, 10, 10, 90);
   }
   popMatrix();
 }
