@@ -13,10 +13,25 @@ void setup() {
   textAlign(CENTER, CENTER);
   textSize(50);
   myClient = new Client(this, "127.0.0.1", 1234);
-  turn = 1;
 }
 
 void draw() {
+  
+  //receiving messages
+  if (myClient.available() > 0) {
+    String incoming = myClient.readString();
+    if (incoming.length() == 1) {
+      turn = int(incoming);
+      println("Event recieved. Turn is " + turn);
+    } else {
+      int r = int(incoming.substring(0,1));
+      int c = int(incoming.substring(2,3));
+      grid[r][c] = 2;
+      turn = 1;
+      println("coordinates: " + r + "," + c);
+    }
+  }
+  
   background(255);
   
   //draw diving lines
@@ -49,15 +64,7 @@ void draw() {
     fill(0, 255, 0);
   }
   ellipse(250, 350, 70, 70);
-  
-  //receiving messages
-  if (myClient.available() > 0) {
-    String incoming = myClient.readString();
-    int r = int(incoming.substring(0,1));
-    int c = int(incoming.substring(2,3));
-    grid[r][c] = 2;
-    turn = 1;
-  }
+
 }
 
 void drawXO(int row, int col) {
@@ -84,11 +91,3 @@ void mouseReleased() {
     }
   }
 }
-
-/*
-void clientEvent(Client client) {
-    int incoming = myClient.read();
-    turn = incoming;
-    println("Event recieved. Turn is" + turn);
-}
-*/

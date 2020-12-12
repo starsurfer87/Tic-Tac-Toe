@@ -13,10 +13,21 @@ void setup() {
   textAlign(CENTER, CENTER);
   textSize(50);
   myServer = new Server(this, 1234);
-  turn = 1; //int(random(0, 2)); // 0 is server, 1 is client
+  turn = int(random(0, 2)); // 0 is server, 1 is client
 }
 
 void draw() {
+  
+  //recieving messages
+  Client myClient = myServer.available();
+  if (myClient != null) {
+    String incoming = myClient.readString();
+    int r = int(incoming.substring(0,1));
+    int c = int(incoming.substring(2,3));
+    grid[r][c] = 1;
+    turn = 0;
+  }
+  
   background(255);
   
   //draw diving lines
@@ -50,16 +61,7 @@ void draw() {
     fill(255, 0, 0);
   }
   ellipse(250, 350, 70, 70);
-  
-  //recieving messages
-  Client myClient = myServer.available();
-  if (myClient != null) {
-    String incoming = myClient.readString();
-    int r = int(incoming.substring(0,1));
-    int c = int(incoming.substring(2,3));
-    grid[r][c] = 1;
-    turn = 0;
-  }
+
 }
 
 void drawXO(int row, int col) {
@@ -88,9 +90,8 @@ void mouseReleased() {
   }
 }
 
-/*
+
 void serverEvent(Server server, Client client) {
-  println("Sending turn to client. Turn is" + turn);
-  myServer.write(turn);
+  println("Sending turn to client. Turn is " + turn);
+  myServer.write(str(turn));
 }
-*/
