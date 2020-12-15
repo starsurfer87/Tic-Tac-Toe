@@ -55,7 +55,8 @@ void draw() {
   
   //draw mouse coordinates
   fill(0);
-  text(mouseX + "," + mouseY, 150, 350);
+  textSize(30);
+  text(mouseX + "," + mouseY, 100, 350);
   
   //draw turn indicator
   if (turn == 0) {
